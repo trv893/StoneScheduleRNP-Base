@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, DefaultTheme  } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -29,9 +29,18 @@ import RootNavigator from './navigation/RootNavigator'
       // );
 // *** UNCOMMENT ABOVE TO USE SETTINGS SCREEN NAVIGATOR ***
 
+// Define your custom colors here
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'blue',
+    accent: 'red',
+  },
+};
 export default function App() {
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <RootNavigator />
     </PaperProvider>
   );
