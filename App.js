@@ -1,25 +1,8 @@
-import React from 'react';
-import { Provider as PaperProvider, DefaultTheme  } from 'react-native-paper';
-import RootNavigator from './navigation/RootNavigator'
-
-// *** UNCOMMENT BELOW TO USE CUSTOM FONTS ***
-          // import { useFonts } from 'expo-font';
-          // const loadFonts = async () => {
-          //   await Font.loadAsync({
-          //     'MyCustomFont-Regular': require('./assets/fonts/************.ttf'), // *** REPLACE WITH YOUR FONT FILE ***
-          //     'MyCustomFont-Bold': require('./assets/fonts/************.ttf'),  // *** REPLACE WITH YOUR FONT FILE ***
-          //   });
-          // };
-// *** UNCOMMENT ABOVE TO USE CUSTOM FONTS ***
-
-// *** UNCOMMENT BELOW TO USE SETTINGS SCREEN NAVIGATOR ***
-      // const SettingsStack = () => (
-      //   <Stack.Navigator>
-      //     <Stack.Screen name="Profile" component={ProfileScreen} />
-      //     <Stack.Screen name="Settings" component={SettingsScreen} />
-      //   </Stack.Navigator>
-      // );
-// *** UNCOMMENT ABOVE TO USE SETTINGS SCREEN NAVIGATOR ***
+import React, { useContext } from 'react';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import RootNavigator from './navigation/RootNavigator';
+import { AppProvider, AppContext } from './contexts/AppContext';
+import { ActivityIndicator, View } from 'react-native';
 
 // Define your custom colors here
 const happyLightColors = {
@@ -44,10 +27,26 @@ const theme = {
   },
   roundness: 8,
 };
+const AppWrapper = () => {
+  const { isLoading } = useContext(AppContext);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  return <RootNavigator />;
+};
+
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
-      <RootNavigator />
-    </PaperProvider>
+    <AppProvider>
+      <PaperProvider theme={theme}>
+        <AppWrapper />
+      </PaperProvider>
+    </AppProvider>
   );
 }

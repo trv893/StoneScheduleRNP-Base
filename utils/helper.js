@@ -41,7 +41,7 @@ export const filterShiftData = (shiftData, params = {}) => {
     if (!shiftData) {
       return [];
     }
-    const noDataString = 'Not Assigned';
+    const noDataReturn = false;
   
     const { date = null, userId = null, released = null, shiftTime = null } = params;
   
@@ -65,14 +65,16 @@ export const filterShiftData = (shiftData, params = {}) => {
       (released === null || shift.releasedByUser === (released === true)) &&
       (!shiftTime || shift.shiftName === shiftTime.toUpperCase())
     );
-    console.log("FILTERED SHIFT DATA:  " + filteredShiftData)
   
     if (filteredShiftData.length === 0) {
-      return noDataString;
-      }
-  
-    return filteredShiftData;
+      return noDataReturn;
+    } else if (filteredShiftData.length === 1) {
+      return filteredShiftData[0];
+    } else {
+      return filteredShiftData;
+    }
   };
+
 
   export const format = (date) => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -107,3 +109,16 @@ export const filterShiftData = (shiftData, params = {}) => {
     newDate.setDate(newDate.getDate() - days);
     return newDate;
   };
+
+  /**
+ * Logs a variable to the console, along with its name and location context.
+ * @param {string} variableName - The name of the variable being logged.
+ * @param {*} variable - The variable being logged.
+ * @example
+ * const myVariable = 'Hello, World!';
+ * consoleLogTest('myVariable', myVariable);
+ * // Output: myVariable: Hello, World!
+ */
+export const consoleLogTest = (variableName, variable) => {
+  console.trace(`${variableName}:`, typeof variable === 'object' ? JSON.stringify(variable) : variable);
+}
