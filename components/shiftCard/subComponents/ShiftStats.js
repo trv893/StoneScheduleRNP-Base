@@ -19,7 +19,7 @@ const ShiftStats = ({ currentUseDate }) => {
       setFilteredData(filteredShiftData);
     }, [aggShiftData, currentUseDate, userId]);
   
-    consoleLogTest('filteredShiftData data:', filteredData);
+    //consoleLogTest('filteredShiftData data:', filteredData);
   
     if (filteredData===null) {
       return (

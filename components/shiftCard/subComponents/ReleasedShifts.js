@@ -13,14 +13,28 @@ const ReleasedShifts = ({ currentUseDate, currentShiftTime }) => {
     const [filteredData, setFilteredData] = useState(null);
     const [requestedShifts, setRequestedShifts] = useState([]);
     const { colors } = useTheme();
+    const testdate = "2023-04-02T00:32:06.302Z";
+
+    function parseDate(date) {
+      const dateObject = new Date(date);
+      if (isNaN(dateObject)) {
+        return null;
+      }
+      const year = dateObject.getUTCFullYear();
+      const month = String(dateObject.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(dateObject.getUTCDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    
 
     useEffect(() => {
         //TODO: Change shiftDataExample to aggShiftData after testing
         const filteredShiftData = filterShiftData(shiftDataExample, { date: currentUseDate, released: true, shiftTime: currentShiftTime });
+
         setFilteredData(filteredShiftData);
     }, [aggShiftData, currentUseDate, userId]);
 
-    //consoleLogTest('RleasedSHfits data:', filteredData.assignee);
+    consoleLogTest('currentUseDate:', parseDate(currentUseDate));
 
     if (filteredData === null) {
         return (
@@ -53,8 +67,10 @@ const ReleasedShifts = ({ currentUseDate, currentShiftTime }) => {
 
     const renderItem = ({ item }) => {
         const currentUserShiftData = filterShiftData(aggShiftData, { date: currentUseDate, userId: userId, shiftTime: currentShiftTime });
-        const buttonTitle = currentUserShiftData ? 'Swap' : 'Pick up';
+        consoleLogTest('currentUserShiftData:', parseDate(currentUserShiftData));
+        const buttonTitle = (currentUserShiftData.length=0) ? 'Swap' : 'Pick up';
         const isRequested = requestedShifts.includes(item.shiftAssignmentId);
+        consoleLogTest('currentUserShiftData:', currentUserShiftData);
       
         const handlePickupShift = (item) => {
           if (isRequested) {

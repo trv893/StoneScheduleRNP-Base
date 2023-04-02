@@ -14,9 +14,9 @@
   },
   {
     "shiftAssignmentId": 4989,
-    "userId": 2,
+    "userId": 3,
     "shiftId": 1,
-    "dateAssigned": "2023-03-31T00:00:00",
+    "dateAssigned": "2023-04-01T00:00:00",
     "sectionId": 5,
     "releasedByUser": true,
     "dayId": 3,
@@ -29,14 +29,14 @@
     "shiftAssignmentId": 2828,
     "userId": 2,
     "shiftId": 2,
-    "dateAssigned": "2023-03-10T00:00:00",
+    "dateAssigned": "2023-04-02T00:00:00",
     "sectionId": 11,
-    "releasedByUser": false,
+    "releasedByUser": true,
     "dayId": 6,
     "section": "11",
     "assignee": "Aleesha Johnson",
     "releaseByUserId": 0,
-    "shiftName": "PM"
+    "shiftName": "AM"
   },
   {
     "shiftAssignmentId": 2827,
@@ -107,14 +107,14 @@
     "shiftAssignmentId": 4993,
     "userId": 3,
     "shiftId": 1,
-    "dateAssigned": "2023-03-31T00:00:00",
+    "dateAssigned": "2023-04-02T00:00:00",
     "sectionId": 23,
     "releasedByUser": true,
     "dayId": 3,
     "section": "23",
     "assignee": "Andre Johnson",
     "releaseByUserId": 0,
-    "shiftName": "AM"
+    "shiftName": "PM"
   },
   {
     "shiftAssignmentId": 4994,
@@ -159,7 +159,7 @@
     "shiftAssignmentId": 4998,
     "userId": 4,
     "shiftId": 2,
-    "dateAssigned": "2023-03-31T00:00:00",
+    "dateAssigned": "2023-04-01T00:00:00",
     "sectionId": 15,
     "releasedByUser": true,
     "dayId": 4,

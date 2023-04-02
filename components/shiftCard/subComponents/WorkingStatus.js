@@ -32,7 +32,7 @@ const WorkingStatus = ({ currentUseDate, currentShiftTime }) => {
       {filteredData == false ? (
         <Text>Not Scheduled</Text>
       ) : (
-        <Text>Working Section: {filteredData['section']}</Text>
+        <Text>Working Section: {filteredData[0]['section']}</Text>
       )}
     </View>
   );

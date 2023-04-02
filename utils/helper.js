@@ -38,42 +38,34 @@
  * // filteredShiftData2 is an array containing the shift object with shiftId 1 on March 14th, 2023
  */
 export const filterShiftData = (shiftData, params = {}) => {
-    if (!shiftData) {
-      return [];
+  if (!shiftData) {
+    return [];
+  }
+
+  const { date = null, userId = null, released = null, shiftTime = null } = params;
+
+  function parseDate(date) {
+    const dateObject = new Date(date);
+    if (isNaN(dateObject)) {
+      return null;
     }
-    const noDataReturn = false;
-  
-    const { date = null, userId = null, released = null, shiftTime = null } = params;
-  
-    /**
-     * Parses a date string or a Date object and returns the date in ISO format.
-     * Returns null if the input is an invalid date string.
-     * @param {String|Date} date - The date string or Date object to parse.
-     * @returns {String|null} The date in ISO format or null if the input is an invalid date string.
-     */
-    function parseDate(date) {
-      const dateObject = new Date(date);
-      const isoDate = isNaN(dateObject) ? null : dateObject.toISOString();
-      return isoDate ? isoDate.substring(0, 10) : null;
-    }
-  
-    const filteredUserId = typeof userId === 'string' ? parseInt(userId) : userId;
-  
-    const filteredShiftData = shiftData.filter(shift => 
-      (!date || parseDate(shift.dateAssigned) === parseDate(date)) &&
-      (!filteredUserId || shift.userId === filteredUserId) &&
-      (released === null || shift.releasedByUser === (released === true)) &&
-      (!shiftTime || shift.shiftName === shiftTime.toUpperCase())
-    );
-  
-    if (filteredShiftData.length === 0) {
-      return noDataReturn;
-    } else if (filteredShiftData.length === 1) {
-      return filteredShiftData[0];
-    } else {
-      return filteredShiftData;
-    }
-  };
+    const year = dateObject.getUTCFullYear();
+    const month = String(dateObject.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(dateObject.getUTCDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  const filteredUserId = typeof userId === 'string' ? parseInt(userId) : userId;
+
+  const filteredShiftData = shiftData.filter(shift => 
+    (!date || parseDate(shift.dateAssigned) === parseDate(date)) &&
+    (!filteredUserId || shift.userId === filteredUserId) &&
+    (released === null || shift.releasedByUser === released) &&
+    (!shiftTime || shift.shiftName === shiftTime.toUpperCase())
+  );
+
+  return filteredShiftData;
+};
 
 
   export const format = (date) => {
@@ -110,15 +102,32 @@ export const filterShiftData = (shiftData, params = {}) => {
     return newDate;
   };
 
+  function customTrace(variableName, variable) {
+    const originalPrepareStackTrace = Error.prepareStackTrace;
+    Error.prepareStackTrace = (_, stack) => stack;
+    const error = new Error();
+    Error.captureStackTrace(error, customTrace);
+    const stack = error.stack;
+    Error.prepareStackTrace = originalPrepareStackTrace;
+  
+    const caller = stack[1];
+    const fileName = caller.getFileName();
+    const lineNumber = caller.getLineNumber();
+    const columnNumber = caller.getColumnNumber();
+  
+    console.log(`${variableName}:`, typeof variable === 'object' ? JSON.stringify(variable) : variable, `at ${fileName}:${lineNumber}:${columnNumber}`);
+  }
+  
   /**
- * Logs a variable to the console, along with its name and location context.
- * @param {string} variableName - The name of the variable being logged.
- * @param {*} variable - The variable being logged.
- * @example
- * const myVariable = 'Hello, World!';
- * consoleLogTest('myVariable', myVariable);
- * // Output: myVariable: Hello, World!
- */
-export const consoleLogTest = (variableName, variable) => {
-  console.trace(`${variableName}:`, typeof variable === 'object' ? JSON.stringify(variable) : variable);
-}
+   * Logs a variable to the console, along with its name and location context.
+   * @param {string} variableName - The name of the variable being logged.
+   * @param {*} variable - The variable being logged.
+   * @example
+   * const myVariable = 'Hello, World!';
+   * consoleLogTest('myVariable', myVariable);
+   * // Output: myVariable: Hello, World! at path/to/caller/file.js:line:column
+   */
+  export const consoleLogTest = (variableName, variable) => {
+    customTrace(variableName, variable);
+  };
+  
