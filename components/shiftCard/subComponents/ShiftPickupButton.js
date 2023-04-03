@@ -5,7 +5,7 @@ import { consoleLogTest, filterShiftData } from '../../../utils/helper';
 import { AppContext } from '../../../contexts/AppContext';
 import shiftDataExample from '../../../assets/shiftDataExample.json';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import CustomButtons from '../../Buttons';
 
 const ShiftPickupButton = ({ releasedShiftData, item, buttonTitle, isRequested, handlePickupShift, pickupShift, cancelRequest }) => {
 
@@ -19,7 +19,7 @@ const ShiftPickupButton = ({ releasedShiftData, item, buttonTitle, isRequested, 
     }, [releasedShiftData, buttonTitle, isRequested]);
 
 
-    if ( buttonTitle === null) {
+    if (buttonTitle === null) {
         return (
             <View style={styles.container}>
                 <Text>Loading...</Text>
@@ -31,14 +31,19 @@ const ShiftPickupButton = ({ releasedShiftData, item, buttonTitle, isRequested, 
         <View style={styles.shiftItem}>
             <Button
                 mode="contained"
+                compact={true}
                 onPress={() => handlePickupShift(item)}
                 style={[styles.button, { justifyContent: 'center', paddingHorizontal: 8 }]}
-                buttonColor={isRequested ? colors.success : colors.primary}
+                buttonColor={isRequested ? colors.primary : colors.primary}
                 labelStyle={{ marginRight: isRequested ? 0 : 8 }}
                 contentStyle={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
             >
-                {isRequested ? 'Pending' : buttonTitle}
-                {isRequested && <MaterialCommunityIcons name="close" size={24} color="red" style={{ marginLeft: 8 }} />}
+                    <Text style={styles.buttonText}>
+                        {isRequested ? 'Pending' : buttonTitle}
+                    </Text>
+                    <Text style={styles.buttonIcon}>
+                        {isRequested && <MaterialCommunityIcons name="close" size={24} color="red" style={{ marginLeft: 8 }} />}
+                    </Text>
             </Button>
         </View>
     );
@@ -47,7 +52,6 @@ const ShiftPickupButton = ({ releasedShiftData, item, buttonTitle, isRequested, 
 const styles = StyleSheet.create({
     container: {
         marginHorizontal: 'auto',
-
         alignItems: 'center',
     },
     shiftItem: {
@@ -59,8 +63,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: 'lightgray',
     },
-    button: {
-        paddingHorizontal: 0,
+    buttonText: {
+        marginBottom: 4,
+
     },
 });
 export default ShiftPickupButton;

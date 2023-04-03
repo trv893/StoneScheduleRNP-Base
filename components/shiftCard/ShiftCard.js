@@ -27,7 +27,7 @@ const ShiftCard = ({ date, shiftTime }) => {
           <ReleasedShifts style={styles.ReleasedShifts} currentUseDate={date} currentShiftTime={shiftTime} />
           <WorkingStatus style={styles.WorkingStatus} currentUseDate={date} currentShiftTime={shiftTime}></WorkingStatus>
           <ShiftTradeModal style={styles.ShiftTradeModal} currentUseDate={date}></ShiftTradeModal>
-          <ShiftStats style={styles.ShiftStats} currentUseDate={date}></ShiftStats>
+          <ShiftStats style={styles.ShiftStats} currentUseDate={date} shiftTime={shiftTime}></ShiftStats>
         </Card.Content>
       </Card>
     </View>
