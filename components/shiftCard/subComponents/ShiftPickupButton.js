@@ -7,54 +7,28 @@ import shiftDataExample from '../../../assets/shiftDataExample.json';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-const ShiftPickupButton = ({ shiftData, item }) => {
+const ShiftPickupButton = ({ releasedShiftData, item, buttonTitle, isRequested, handlePickupShift, pickupShift, cancelRequest }) => {
 
-    const currentUserShiftData = filterShiftData(aggShiftData, { date: currentUseDate, userId: userId, shiftTime: currentShiftTime });
-    consoleLogTest('currentUserShiftData:', parseDate(currentUserShiftData));
-    const buttonTitle = (currentUserShiftData.length = 0) ? 'Swap' : 'Pick up';
-    const isRequested = requestedShifts.includes(item.shiftAssignmentId);
-    consoleLogTest('currentUserShiftData:', currentUserShiftData);
+    const { colors } = useTheme();
 
-    const handleCancelRequest = (item) => {
-        Alert.alert('Cancel Request', 'Are you sure you want to cancel the request?', [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Yes', onPress: () => {
-            cancelRequest(item);
-            setRequestedShifts(requestedShifts.filter((id) => id !== item.shiftAssignmentId));
-          }},
-        ]);
-      };
+    useEffect(() => {
+        // //TODO: Change shiftDataExample to aggShiftData after testing
+        // const currentShiftData = filterShiftData(shiftDataExample, { date: currentUseDate, shiftTime: currentShiftTime });
 
-    const pickupShift = (item) => {
-        // TODO: Implement the logic to pick up the shift
-        console.log('Pick up shift:', item);
-    };
+        // setFilteredData(filteredShiftData);
+    }, [releasedShiftData, buttonTitle, isRequested]);
 
-    const cancelRequest = (item) => {
-        // TODO: Implement the logic to cancel the request
-        console.log('Cancel request:', item);
-    };
 
-    const handlePickupShift = (item) => {
-        if (isRequested) {
-            handleCancelRequest(item);
-        } else {
-            Alert.alert('Pick up Shift', 'Are you sure you want to pick up this shift?', [
-                { text: 'Cancel', style: 'cancel' },
-                {
-                    text: 'Yes', onPress: () => {
-                        pickupShift(item);
-                        setRequestedShifts([...requestedShifts, item.shiftAssignmentId]);
-                    }
-                },
-            ]);
-        }
-    };
+    if ( buttonTitle === null) {
+        return (
+            <View style={styles.container}>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.shiftItem}>
-            <Text>{item.assignee ? 'Released' : 'Not released'}</Text>
-            <Text>Section: {item.section}</Text>
             <Button
                 mode="contained"
                 onPress={() => handlePickupShift(item)}
@@ -69,4 +43,24 @@ const ShiftPickupButton = ({ shiftData, item }) => {
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        marginHorizontal: 'auto',
+
+        alignItems: 'center',
+    },
+    shiftItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 2,
+        paddingVertical: 0,
+        borderBottomWidth: 1,
+        borderColor: 'lightgray',
+    },
+    button: {
+        paddingHorizontal: 0,
+    },
+});
 export default ShiftPickupButton;

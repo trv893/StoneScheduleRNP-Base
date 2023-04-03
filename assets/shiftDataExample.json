@@ -16,14 +16,14 @@
     "shiftAssignmentId": 4989,
     "userId": 3,
     "shiftId": 1,
-    "dateAssigned": "2023-04-01T00:00:00",
+    "dateAssigned": "2023-04-03T00:00:00",
     "sectionId": 5,
     "releasedByUser": true,
     "dayId": 3,
     "section": "5",
     "assignee": "Aleesha Johnson",
     "releaseByUserId": 0,
-    "shiftName": "AM"
+    "shiftName": "PM"
   },
   {
     "shiftAssignmentId": 2828,
